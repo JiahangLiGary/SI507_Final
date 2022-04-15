@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>
+        <table style="width: auto; font-size:10px">
+            <tr>
+                <th>Title</th>
+                <th>Rate</th>
+                <th>Tags</th>
+                <th>IMG</th>
+                <th>DESCRIPTION</th>
+                <th>Price</th>
+                <th>release_date</th>
+
+            </tr>
+    
+            {% for game in results %}
+            <tr>
+                <th><a href={{game[3]}}> {{game[0]}} </a></th>
+                <th>{{game[1]}}</th>
+                <th>{{game[2]}}</th>
+                <th><img src="{{game[4]}}"></th>
+                <th>{{game[5]}}</th>
+                <th>{{game[6]}}</th>
+                <th>{{game[7]}}</th>
+
+            </tr>
+            {% endfor %}
+        
+        </table>
+    
+    </h3> 
+</body>
+</html>

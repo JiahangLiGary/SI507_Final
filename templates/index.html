@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+</head>
+<body>
+    <form action="/handle_form_search" method="POST">
+        <p>
+            Please input a game related word to Search: <input name="name" type="text"/><br/><br/><br/>
+        </p>
+        
+        <p>
+            Please choose the order to show result:
+            <select name="order">
+                <option value="1">Relevent</option>
+                <option value="2">Rate Score</option>
+            </select>
+
+        </p>
+
+        <input type="submit" value="Submit Form"/>
+    </form>
+</body>
+</html>
+
