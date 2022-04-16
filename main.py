@@ -9,7 +9,6 @@ from flask import Flask, render_template, request
 CACHE_DICT = {}
 CACHE_NAME = "cache.json"
 Tags_limit = 4
-max_num_detailes = 10
 system_requirments_num = 6
 
 
@@ -36,26 +35,26 @@ def save_cache(cache_dict):
 def fetch_cache(url, cache):
 
     if (url in cache.keys()):  # the url is our unique key
-        print("-----Using cache-----")
+        print("---cache---")
         return cache[url], True
     else:
-        print("-----Fetching data-----")
+        print("---Fetching---")
         time.sleep(0.5)
         response = requests.get(url)
         return response.text, False
 
-# get result with given category with Newtrend selection
+# get result with given category with different selection(NewTrend, Topseller...)
 # base url=https://store.steampowered.com/category/
 # This function will get conrresponds id, title, final price for the games
 
 
-def get_catagory_results_NewTrend(baseurl, catagory_term):
+def get_catagory_results(baseurl, catagory_term, id_info, max_num_detailes=10):
 
     catagory_url = baseurl + catagory_term
     response = requests.get(catagory_url)
     # fetch the data with given catagory url
     soup = BeautifulSoup(response.text, 'html.parser')
-    catagory_results = soup.find(id='NewReleasesRows')
+    catagory_results = soup.find(id=id_info)
 
     catagory_lists = catagory_results.find_all('a')
     results = []
@@ -68,12 +67,11 @@ def get_catagory_results_NewTrend(baseurl, catagory_term):
         else:
             game_dict['game_id'] = game_info.attrs['data-ds-appid']
 
-        title = game_info.find('div', class_='tab_item_name').text
-        game_dict['title'] = title if title is not None else 'None'
+        title = game_info.find('div', class_='tab_item_name')
+        game_dict['title'] = title.text if title is not None else 'None'
 
-        #price = game_info.find('div',class_="discount_final_price")
-        price = game_info.find('div', class_="discount_final_price").text
-        game_dict['price'] = price if price is not None else 'None'
+        price = game_info.find('div', class_="discount_final_price")
+        game_dict['price'] = price.text if price is not None else 'None'
 
         results.append(game_dict)
         num_games += 1
@@ -81,45 +79,12 @@ def get_catagory_results_NewTrend(baseurl, catagory_term):
             break
     return results
 
-# get result with given category with Topsellers
-
-
-def get_catagory_results_TopSellers(baseurl, catagory_term):
-
-    catagory_url = baseurl + catagory_term
-    response = requests.get(catagory_url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    catagory_results = soup.find(id='TopSellersRows')
-
-    catagory_lists = catagory_results.find_all('a')
-    results = []
-    num_games = 0
-    for game_info in catagory_lists:
-        game_dict = {}
-
-        if 'data-ds-appid' not in game_info.attrs.keys():
-            continue
-        else:
-            game_dict['game_id'] = game_info.attrs['data-ds-appid']
-
-        title = game_info.find('div', class_='tab_item_name').text
-        game_dict['title'] = title if title is not None else 'None'
-
-        #price = game_info.find('div',class_="discount_final_price")
-        price = game_info.find('div', class_="discount_final_price").text
-        game_dict['price'] = price if price is not None else 'None'
-
-        results.append(game_dict)
-        num_games += 1
-        if num_games >= max_num_detailes:
-            break
-        return results
 
 # get result based on search term
 # baseurl="https://store.steampowered.com/search/?term="
 
 
-def get_search_results(baseurl, search_term):
+def get_search_results(baseurl, search_term, max_num_detailes=10):
 
     search_url = baseurl + search_term
     response = requests.get(search_url)
@@ -140,8 +105,8 @@ def get_search_results(baseurl, search_term):
             else:
                 game_dict['game_id'] = game_info.attrs['data-ds-appid']
 
-            title = game_info.find('span', class_='title').text
-            game_dict['title'] = title if title is not None else 'None'
+            title = game_info.find('span', class_='title')
+            game_dict['title'] = title.text if title is not None else 'None'
 
             #price = game_info.find('div',class_="search_price")
             price = game_info.find(
@@ -180,15 +145,18 @@ def get_detail_results(game_dicts):
             else:
                 detail_dict['description'] = description.text.strip()
             # find overall rate
-            rate = soup.find('div', class_="user_reviews_summary_row")
+            rate = soup.findAll('div', class_="user_reviews_summary_row")
             if rate == None:
                 detail_dict['rate'] = 0
             else:
-                rate= str(rate.attrs['data-tooltip-html'][0:2])
-                if rate.isnumeric():
-                    detail_dict['rate'] =rate
+                if 'data-tooltip-html' in rate[1].attrs.keys():
+                    rate = str(rate[1].attrs['data-tooltip-html'][0:2])
+                    if rate.isnumeric():
+                        detail_dict['rate'] = rate
+                    else:
+                        detail_dict['rate'] = '0'
                 else:
-                    detail_dict['rate']='No'
+                    detail_dict['rate'] = 0
             # find release date
             block = soup.find('div', class_='block')
             date = block.find('div', class_="release_date")
@@ -244,15 +212,18 @@ def get_detail_results(game_dicts):
             else:
                 requirements_ul = min_requirement_block.find(
                     "ul", class_="bb_ul")
-                re_li = requirements_ul.findAll('li')
-                num_minli = 0
-                min_requirement_list = []
-                for li in re_li:
-                    min_requirement_list.append(li.text)
-                    num_minli += 1
-                    if num_minli >= system_requirments_num:
-                        break
-                detail_dict["min_systemRequirements"] = min_requirement_list
+                if requirements_ul == None:
+                    detail_dict["Recommend_systemRequirements"] = 'None'
+                else:
+                    re_li = requirements_ul.findAll('li')
+                    num_minli = 0
+                    min_requirement_list = []
+                    for li in re_li:
+                        min_requirement_list.append(li.text)
+                        num_minli += 1
+                        if num_minli >= system_requirments_num:
+                            break
+                    detail_dict["min_systemRequirements"] = min_requirement_list
 
             # fetch recommended sys requirements
             min_requirement_block = soup.find(
@@ -262,16 +233,19 @@ def get_detail_results(game_dicts):
             else:
                 requirements_ul = min_requirement_block.find(
                     "ul", class_="bb_ul")
-                re_li = requirements_ul.findAll('li')
-                num_minli = 0
+                if requirements_ul == None:
+                    detail_dict["Recommend_systemRequirements"] = 'None'
+                else:
+                    re_li = requirements_ul.findAll('li')
+                    num_minli = 0
 
-                requirement_list = []
-                for li in re_li:
-                    requirement_list.append(li.text)
-                    num_minli += 1
-                    if num_minli >= system_requirments_num:
-                        break
-                detail_dict["Recommend_systemRequirements"] = requirement_list
+                    requirement_list = []
+                    for li in re_li:
+                        requirement_list.append(li.text)
+                        num_minli += 1
+                        if num_minli >= system_requirments_num:
+                            break
+                    detail_dict["Recommend_systemRequirements"] = requirement_list
             CACHE_DICT[detail_dict['url']] = detail_dict
         save_cache(CACHE_DICT)
         results.append(detail_dict)
@@ -387,6 +361,7 @@ def get_db_results(Switch='1'):
         WHERE RATE <> 'None'
         ORDER BY RATE DESC 
         '''
+
     connection = sqlite3.connect(DB_NAME)
     cursor = connection.cursor()
     result = cursor.execute(query).fetchall()
@@ -403,11 +378,12 @@ def index():
     return render_template('index.html')  # main page design
 
 
-@app.route('/handle_form_search', methods=['POST'])
-def handle_form_search():
+@app.route('/search_word', methods=['POST'])
+def handle_search():
     term = request.form["name"]
+    number = int(request.form["number"])
     url_search = "https://store.steampowered.com/search/?term="
-    games_dict = get_search_results(url_search, term)
+    games_dict = get_search_results(url_search, term, number)
     if games_dict is None:
         return render_template('exception.html')
     else:
@@ -415,8 +391,27 @@ def handle_form_search():
         create_db()
         load_games(games_dict)
         load_details(details_dict)
-        order = request.form["order"]
-        results = get_db_results(order)
+        switch = request.form["order"]
+        results = get_db_results(switch)
+        return render_template('detail.html', results=results)
+
+
+@app.route('/catagory', methods=['POST'])
+def handle_catagory():
+
+    catagory = request.form["catagory"]
+    id_info = request.form["id_info"]
+    number = int(request.form["number"])
+    url_cata = "https://store.steampowered.com/category/"
+    games_dict = get_catagory_results(url_cata, catagory, id_info, number)
+    if games_dict is None:
+        return render_template('exception.html')
+    else:
+        details_dict = get_detail_results(games_dict)
+        create_db()
+        load_games(games_dict)
+        load_details(details_dict)
+        results = get_db_results()
         return render_template('detail.html', results=results)
 
 
