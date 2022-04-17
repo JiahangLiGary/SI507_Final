@@ -132,6 +132,7 @@ def get_detail_results(game_dicts):
         detail_dict = {}
         detail_dict['title'] = game_info['title']
         detail_dict['url'] = url + game_info['game_id']
+        detail_dict['id'] = game_info['game_id']
         response_text, status = fetch_cache(
             detail_dict['url'], CACHE_DICT)
         if status:
@@ -213,7 +214,7 @@ def get_detail_results(game_dicts):
                 requirements_ul = min_requirement_block.find(
                     "ul", class_="bb_ul")
                 if requirements_ul == None:
-                    detail_dict["Recommend_systemRequirements"] = 'None'
+                    detail_dict["min_systemRequirements"] = 'None'
                 else:
                     re_li = requirements_ul.findAll('li')
                     num_minli = 0
@@ -246,6 +247,10 @@ def get_detail_results(game_dicts):
                         if num_minli >= system_requirments_num:
                             break
                     detail_dict["Recommend_systemRequirements"] = requirement_list
+                    if "min_systemRequirements" not in detail_dict.keys():
+                        detail_dict["min_systemRequirements"] = []
+                    if "Recommend_systemRequirements" not in detail_dict.keys():
+                        detail_dict["Recommend_systemRequirements"] = []
             CACHE_DICT[detail_dict['url']] = detail_dict
         save_cache(CACHE_DICT)
         results.append(detail_dict)
@@ -289,7 +294,8 @@ def create_db():
             "DEVELOPER" TEXT NOT NULL,
             "LANGUAGES" TEXT NOT NULL,
             "Min_Requirement" TEXT NOT NULL,
-            "Recommend_Requirement" TEXT NOT NULL
+            "Recommend_Requirement" TEXT NOT NULL,
+            "Id" INTEGER NOT NULL
         )
     '''
     cur.execute(drop_details_sql)
@@ -325,7 +331,7 @@ def load_details(detail_dict):
 
     insert_details_sql = '''
         INSERT INTO Details
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
     '''
 
     conn = sqlite3.connect(DB_NAME)
@@ -343,7 +349,8 @@ def load_details(detail_dict):
             detail['developer'],
             ', '.join(detail['language_options']),
             ', '.join(detail["min_systemRequirements"]),
-            ', '.join(detail["Recommend_systemRequirements"])
+            ', '.join(detail["Recommend_systemRequirements"]),
+            detail['id']
         ])
     conn.commit()
     conn.close()
@@ -413,6 +420,21 @@ def handle_catagory():
         load_details(details_dict)
         results = get_db_results()
         return render_template('detail.html', results=results)
+
+
+@app.route('/<id>', methods=['GET'])
+def more_info(id):
+    query = '''
+    SELECT * FROM Details WHERE ID=?
+    '''
+    connection = sqlite3.connect(DB_NAME)
+    cursor = connection.cursor()
+    result = cursor.execute(query, [id]).fetchall()
+    result = result[0]
+    min_req = result[10].split(',')
+    rec_req = result[11].split(',')
+    connection.close()
+    return render_template('extension_info.html', game=result, min_req=min_req, rec_req=rec_req)
 
 
 if __name__ == "__main__":

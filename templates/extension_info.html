@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More information of the game</title>
+</head>
+<body>
+        <div >
+            <h1>{{game[0]}}</h1>
+            <img src="{{game[4]}}">
+        </div>
+        <div>
+            <table>
+                
+                <tr>
+                    <th>Minimum System requirements</th>
+                </tr>
+                {% for req in min_req %}
+                    <tr>
+                        <td>{{req}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <table>
+                <tr>
+                    <th>Recommended System requirements</th>
+                </tr>
+                {% for req in rec_req %}
+                    <tr>
+                        <td>{{req}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div>
+            <h3>Developer:</h3>
+            <p>{{game[8]}}</p>
+        </div>
+        <div>
+            <h3>Supported Languages:</h3>
+            <p>{{game[9]}}</p>
+        </div>
+</body>
+</html>

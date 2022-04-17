@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Detail of Games</title>
 </head>
 <body>
     <h3>
@@ -17,7 +17,7 @@
                 <th>DESCRIPTION</th>
                 <th>Price</th>
                 <th>release_date</th>
-
+                <th>More info</th>
             </tr>
     
             {% for game in results %}
@@ -29,12 +29,14 @@
                 <th>{{game[5]}}</th>
                 <th>{{game[6]}}</th>
                 <th>{{game[7]}}</th>
-
+                <th><a href=http://127.0.0.1:5000/{{game[12]}} >info </a></th>
             </tr>
             {% endfor %}
         
         </table>
     
     </h3> 
+    <br>
+    <a href="http://127.0.0.1:5000/"> Back to the main page </a>
 </body>
 </html>
