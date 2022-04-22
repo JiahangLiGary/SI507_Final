@@ -1,0 +1,45 @@
+*{
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    
+}
+body{
+    background: linear-gradient(90deg, rgb(214, 125, 226), rgb(110, 200, 228));
+}
+table{
+    width: 100vw;
+    margin-bottom: 4rem;
+}
+tr.title{
+    th{
+        font-size: 2rem;
+        color: aquamarine;
+        margin: 0 2rem 0 2rem;
+    }
+}
+tr.content{
+    a:hover{
+    background-color: yellow;
+}
+    th{
+       font-size: 1.5rem;
+       a{text-decoration: none;
+         color: red;
+            }
+    }
+
+}
+
+footer{
+    a:hover{
+        background-color: yellow;
+    }
+    a{
+        text-decoration: none;
+        font-size: 25px;
+        background-color: aquamarine;
+        border-radius: 1rem;
+        color: red;
+    }
+}

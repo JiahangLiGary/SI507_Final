@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game_status_view</title>
+    <link rel="stylesheet" href="/static/styles/game_status.css">
+    <link rel="shortcut icon"  type= "text/css" href="../static/pictures/hero.jpeg">
+</head>
+<body>
+    <table>
+        <tr class="title">
+            <th>Game</th>
+            <th>Img</th>
+            <th>Current Players</th>
+            <th>Peak Today</th>
+        </tr>
+        {% for game in game_status %}
+            <tr class="content">
+                <th class="name"><a href="{{game[2]}}">{{game[3]}}</a></th>
+                <th><img src="{{game[4]}}" alt="{{game[4]}}"></th>
+                <th>{{game[0]}}</th>
+                <th>{{game[1]}}</th>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+<footer>
+    <a href="http://127.0.0.1:5000/">main page</a>
+</footer>
+</html>

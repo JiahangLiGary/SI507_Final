@@ -5,18 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail of Games</title>
+    <link rel="stylesheet" href="/static/styles/detail.css">
+    <link rel="shortcut icon"  type= "text/css" href="../static/pictures/hero.jpeg">
 </head>
 <body>
     <h3>
-        <table style="width: auto; font-size:10px">
-            <tr>
+        <table>
+            <tr class="Title">
                 <th>Title</th>
                 <th>Rate</th>
                 <th>Tags</th>
                 <th>IMG</th>
                 <th>DESCRIPTION</th>
                 <th>Price</th>
-                <th>release_date</th>
+                <th>release date</th>
                 <th>More info</th>
             </tr>
     
@@ -29,7 +31,7 @@
                 <th>{{game[5]}}</th>
                 <th>{{game[6]}}</th>
                 <th>{{game[7]}}</th>
-                <th><a href=http://127.0.0.1:5000/{{game[12]}} >info </a></th>
+                <th><a href=http://127.0.0.1:5000/game/{{game[12]}} >info </a></th>
             </tr>
             {% endfor %}
         
@@ -37,6 +39,7 @@
     
     </h3> 
     <br>
-    <a href="http://127.0.0.1:5000/"> Back to the main page </a>
+    <a class="Back" href="http://127.0.0.1:5000/"> main page </a>
 </body>
+
 </html>

@@ -1,0 +1,146 @@
+* {
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+}
+
+div.main_block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+div.search {
+  height: 70vh;
+  width: 50%;
+  background-image: url("../pictures/hero.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+
+div.search h3 {
+  color: white;
+  font-size: 1.8rem;
+}
+
+div.search form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+div.search input {
+  height: 2rem;
+  background-color: yellow;
+  font-size: 1.2rem;
+  margin: 0.5rem 0 4rem 0;
+}
+
+div.search select {
+  height: 2rem;
+  font-size: 1.2rem;
+  background-color: yellow;
+}
+
+div.search input.view {
+  width: 20%;
+  height: 2.5rem;
+  margin-top: 6rem;
+  margin-left: 16rem;
+  border-radius: 1rem;
+  pointer-events: curser;
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+div.search input.view:hover {
+  background-color: red;
+}
+
+div.category {
+  height: 70vh;
+  width: 50%;
+  background-image: url("../pictures/EldenRing.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+div.category h3 {
+  color: white;
+  font-size: 1.8rem;
+  margin: 0 0 4rem 0;
+}
+
+div.category form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+div.category input {
+  height: 2rem;
+  background-color: aquamarine;
+  font-size: 1.2rem;
+}
+
+div.category select {
+  height: 2rem;
+  font-size: 1.2rem;
+  background-color: aquamarine;
+}
+
+div.category input.view {
+  width: 20%;
+  height: 2.5rem;
+  margin-top: 2rem;
+  margin-left: 16rem;
+  border-radius: 1rem;
+  pointer-events: curser;
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+div.category input.view:hover {
+  background-color: #63d2ee;
+}
+
+div.Current_Count {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-image: url("/static/pictures/Elden-Ring.jpg");
+  background-position: center;
+  background-size: contain;
+  height: 30vh;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+div.Current_Count a {
+  color: wheat;
+  text-decoration: none;
+  font-size: 2rem;
+  cursor: pointer;
+  position: relative;
+  background-color: #083897;
+  border-radius: 0.5rem;
+}
+
+div.Current_Count a:hover {
+  background-color: purple;
+}
+/*# sourceMappingURL=index.css.map */

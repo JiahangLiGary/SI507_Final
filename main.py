@@ -3,7 +3,6 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import sqlite3
-import numpy as np
 from flask import Flask, render_template, request
 
 CACHE_DICT = {}
@@ -377,6 +376,43 @@ def get_db_results(Switch='1'):
     return result
 
 
+def get_game_status(max_number=10):
+    game_status = []
+    number = 0
+    response = requests.get("https://store.steampowered.com/stats/")
+    soup = BeautifulSoup(response.text, 'html.parser')
+    trs = soup.findAll('tr', class_='player_count_row')
+    for tr in trs:
+        game = []
+        # current_players
+        current_players = tr.findAll(
+            'span', class_='currentServers')[0].text
+        game.append(current_players)
+        # peak_today
+
+        peak_today = tr.findAll(
+            'span', class_='currentServers')[1].text
+        game.append(peak_today)
+        # url
+        url = tr.find("a").attrs['href']
+        game.append(url)
+        response_in = requests.get(url)
+        soup_in = BeautifulSoup(response_in.text, 'html.parser')
+        # name
+        name = soup_in.find('div', id="appHubAppName").text
+        game.append(name)
+        block = soup_in.find('div', class_='block')
+        image_url = block.find(
+            'img', class_='game_header_image_full')['src']
+        # img_url
+        game.append(image_url)
+        game_status.append(game)
+        number += 1
+        if number >= max_number:
+            break
+    return game_status
+
+
 app = Flask(__name__)
 
 
@@ -422,7 +458,7 @@ def handle_catagory():
         return render_template('detail.html', results=results)
 
 
-@app.route('/<id>', methods=['GET'])
+@app.route('/game/<id>', methods=['GET'])
 def more_info(id):
     query = '''
     SELECT * FROM Details WHERE ID=?
@@ -435,6 +471,13 @@ def more_info(id):
     rec_req = result[11].split(',')
     connection.close()
     return render_template('extension_info.html', game=result, min_req=min_req, rec_req=rec_req)
+
+
+@app.route('/game_status', methods=['GET'])
+def handle_game_status():
+    game_status = get_game_status()
+
+    return render_template('game_status.html', game_status=game_status)
 
 
 if __name__ == "__main__":

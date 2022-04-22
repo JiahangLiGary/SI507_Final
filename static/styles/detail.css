@@ -1,0 +1,30 @@
+body {
+  background: -webkit-gradient(linear, left top, right top, from(#d67de2), to(#6ec8e4));
+  background: linear-gradient(90deg, #d67de2, #6ec8e4);
+}
+
+table, th, td {
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+a {
+  text-decoration: none;
+  color: red;
+}
+
+tr.Title {
+  background: -webkit-gradient(linear, left top, right top, from(#dd480d), to(#d0ef07));
+  background: linear-gradient(90deg, #dd480d, #d0ef07);
+}
+
+a.Back {
+  font-size: 25px;
+  background-color: aquamarine;
+  border-radius: 1rem;
+}
+
+a:hover {
+  background-color: yellow;
+}
+/*# sourceMappingURL=detail.css.map */

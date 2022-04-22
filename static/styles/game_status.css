@@ -1,0 +1,48 @@
+* {
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  background: -webkit-gradient(linear, left top, right top, from(#d67de2), to(#6ec8e4));
+  background: linear-gradient(90deg, #d67de2, #6ec8e4);
+}
+
+table {
+  width: 100vw;
+  margin-bottom: 4rem;
+}
+
+tr.title th {
+  font-size: 2rem;
+  color: aquamarine;
+  margin: 0 2rem 0 2rem;
+}
+
+tr.content a:hover {
+  background-color: yellow;
+}
+
+tr.content th {
+  font-size: 1.5rem;
+}
+
+tr.content th a {
+  text-decoration: none;
+  color: red;
+}
+
+footer a:hover {
+  background-color: yellow;
+}
+
+footer a {
+  text-decoration: none;
+  font-size: 25px;
+  background-color: aquamarine;
+  border-radius: 1rem;
+  color: red;
+}
+/*# sourceMappingURL=game_status.css.map */

@@ -5,72 +5,78 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles/index.css">
+    <link rel="shortcut icon"  type= "text/css" href="../static/pictures/hero.jpeg">
 </head>
 <body>
+    <div class="main_block">
+        <div class="search">
+            <form action="/search_word" method="POST">
+                <h3 class="input_word">
+                    Please input a game related word to Search: <input name="name" type="text"/><br/>
+                </h3>
+                <h3>
+                    Input number of games you want to display at one time
+                    <input type="text" name="number" value="10"><br>
+                </h3>
+                
+                <h3>
+                    Please choose the order to show results:
+                    <select name="order">
+                        <option value="1">Relevence</option>
+                        <option value="2">Highest Rate Score</option>
 
-    <div name="search">
-        <form action="/search_word" method="POST">
-            <p>
-                Please input a game related word to Search: <input name="name" type="text"/><br/>
-            </p>
-            <h4>
-                Input number of games you want to display at one time
-                <input type="text" name="number" value="10"><br>
-            </h4>
-            
-            <p>
-                Please choose the order to show results:
-                <select name="order">
-                    <option value="1">Relevence</option>
-                    <option value="2">Highest Rate Score</option>
+                    </select>
 
-                </select>
+                </h3>
 
-            </p>
+                <input class="view" type="submit" value="View Results"/>
+            </form>
+        </div>
+        <br>
 
-            <input type="submit" value="Submit Form"/>
-        </form>
+        <div class="category">
+            <form action="/catagory" method="POST">
+
+                <h3>
+                    You can choose to view interested game category
+                    <select name="catagory">
+                        <option value="action">Action</option>
+                        <option value="rpg">Role-Playing</option>
+                        <option value="strategy">Strategy</option>
+                        <option value="adventure_and_casual">Adventure & Casual</option>
+                        <option value="simulation">Simulation</option>
+                        <option value="sports_and_racing">Sports & Racing</option>
+                        <option value="anime">Anime</option>
+                        <option value="mystery_detective">Mystery & Detective</option>
+                        <option value="horror">Horror</option>
+                        <option value="science_fiction">Sci-Fi & Cyberpunk</option>
+                        <option value="exploration_open_world">Open World</option>
+                        <option value="singleplayer">Singleplayer</option>
+                        <option value="multiplayer_online_competitive">Online Competitive</option>
+                    </select>
+        
+                </h3>
+                <h3>
+                    Input number of games you want to display at one time
+                    <input type="text" name="number" value="10"><br>
+                </h3>
+                <h3>
+                    Please select Your Preferences of Display
+                    <select name="id_info">
+                        <option value='NewReleasesRows'>New & Trending</option>
+                        <option value="TopSellersRows">Top Sellers</option>
+                        <option value="ConcurrentUsersRows">What's Being Played</option>
+                        <option value="TopRatedRows">Top Rated</option>
+                        <option value="ComingSoonRows">Upcoming</option>
+                    </select>
+                </h3>
+                <input class="view" type="submit" value="View Results"/>
+            </form>
+        </div>
     </div>
-    <br>
-    <br>
-    <br>
-    <div>
-        <form action="/catagory" method="POST">
-            <h4>
-                Input number of games you want to display at one time
-                <input type="text" name="number" value="10"><br>
-            </h4>
-            <h3>
-                You can choose to view interested game category
-                <select name="catagory">
-                    <option value="action">Action</option>
-                    <option value="rpg">Role-Playing</option>
-                    <option value="strategy">Strategy</option>
-                    <option value="adventure_and_casual">Adventure & Casual</option>
-                    <option value="simulation">Simulation</option>
-                    <option value="sports_and_racing">Sports & Racing</option>
-                    <option value="anime">Anime</option>
-                    <option value="mystery_detective">Mystery & Detective</option>
-                    <option value="horror">Horror</option>
-                    <option value="science_fiction">Sci-Fi & Cyberpunk</option>
-                    <option value="exploration_open_world">Open World</option>
-                    <option value="singleplayer">Singleplayer</option>
-                    <option value="multiplayer_online_competitive">Online Competitive</option>
-                </select>
-    
-            </h3>
-            <h3>
-                Please select Your Preferences of Display
-                <select name="id_info">
-                    <option value='NewReleasesRows'>New & Trending</option>
-                    <option value="TopSellersRows">Top Sellers</option>
-                    <option value="ConcurrentUsersRows">What's Being Played</option>
-                    <option value="TopRatedRows">Top Rated</option>
-                    <option value="ComingSoonRows">Upcoming</option>
-                </select>
-            </h3>
-            <input type="submit" value="Submit Form"/>
-        </form>
+    <div class="Current_Count">
+        <a href="http://127.0.0.1:5000/game_status">Check STEAM & GAME STATS: Top 10 games by current player count</a>
     </div>
 </body>
 </html>

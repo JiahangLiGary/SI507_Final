@@ -1,0 +1,23 @@
+body {
+    background: linear-gradient(90deg, rgb(214, 125, 226), rgb(110, 200, 228));
+  }
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+  }
+a{
+    text-decoration: none;
+    color: red;
+}
+
+tr.Title{
+    background: linear-gradient(90deg, rgb(221, 72, 13), rgb(208, 239, 7));
+}
+a.Back{
+    font-size: 25px;
+    background-color: aquamarine;
+    border-radius: 1rem;
+}
+a:hover{
+    background-color: yellow;
+}
